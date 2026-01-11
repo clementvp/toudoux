@@ -9,11 +9,29 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+const AuthController = () => import('#controllers/auth_controller')
 const WebTodosController = () => import('#controllers/web/todos_controller')
 const ApiTodosController = () => import('#controllers/api/todos_controller')
 
-router.on('/').renderInertia('home')
-router.on('/login').renderInertia('login')
+router.get('/', ({ response }) => {
+  return response.redirect().toRoute('todos.index')
+})
+
+router
+  .group(() => {
+    router.post('login', [AuthController, 'loginApi'])
+    router.post('logout', [AuthController, 'logout']).use(middleware.auth({ guards: ['api'] }))
+  })
+  .prefix('/api')
+
+// Groupe WEB (Navigateur)
+router
+  .group(() => {
+    router.get('login', [AuthController, 'showLogin'])
+    router.post('login', [AuthController, 'loginWeb'])
+    router.post('logout', [AuthController, 'logout']).use(middleware.auth({ guards: ['web'] }))
+  })
+  .prefix('/web')
 
 router
   .group(() => {

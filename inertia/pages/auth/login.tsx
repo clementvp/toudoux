@@ -12,7 +12,7 @@ export default function Login() {
   })
 
   const onFinish = () => {
-    post('/login') // L'URL de votre route de login dans Adonis
+    post('/web/login')
   }
 
   return (

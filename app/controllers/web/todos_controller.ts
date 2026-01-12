@@ -9,8 +9,11 @@ export default class TodosController {
   async index({ auth, inertia }: HttpContext) {
     const user = auth.getUserOrFail()
     const todos = await user.related('todos').query().orderBy('created_at', 'desc')
-
     return inertia.render('todos/index', { todos })
+  }
+
+  async create({ inertia }: HttpContext) {
+    return inertia.render('todos/create')
   }
 
   /**

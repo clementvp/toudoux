@@ -47,6 +47,7 @@ router
 router
   .group(() => {
     router.get('todos', [WebTodosController, 'index']).as('todos.index')
+    router.get('todos/create', [WebTodosController, 'create']).as('todos.create')
     router.get('todos/:id', [WebTodosController, 'show']).as('todos.show')
     router.post('todos', [WebTodosController, 'store']).as('todos.store')
     router.put('todos/:id', [WebTodosController, 'update']).as('todos.update')

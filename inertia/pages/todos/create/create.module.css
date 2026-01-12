@@ -1,0 +1,40 @@
+/* inertia/css/create.module.css */
+.pageHeader {
+    display: flex !important;
+    justify-content: space-between !important; /* Pousse les enfants aux extrémités */
+    align-items: flex-end;
+    margin-bottom: 32px;
+    width: 100%; /* Important pour que le space-between fonctionne */
+}
+
+.headerTexts {
+    display: flex;
+    flex-direction: column;
+}
+
+.actionBar {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid #f0f0f0;
+    display: flex; /* Active le mode flex */
+    justify-content: flex-end; /* Pousse le contenu à DROITE */
+    align-items: center;
+    gap: 12px; /* Espace entre les deux boutons */
+}
+
+.btnCustom {
+    height: 50px !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.btnCancel {
+    min-width: 150px;
+}
+
+.btnSubmit {
+    min-width: 200px;
+}

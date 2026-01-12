@@ -1,0 +1,33 @@
+.layoutContainer {
+    min-height: 100vh;
+    background: #f0f2f5;
+}
+
+.headerStyle {
+    background: #fff;
+    padding: 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logoContainer {
+    background: #1890ff;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.contentWrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+}

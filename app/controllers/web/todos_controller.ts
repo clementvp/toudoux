@@ -6,10 +6,25 @@ export default class TodosController {
    * GET /web/todos
    * Affiche la liste complète des tâches
    */
-  async index({ auth, inertia }: HttpContext) {
+  async index({ auth, inertia, request }: HttpContext) {
     const user = auth.getUserOrFail()
-    const todos = await user.related('todos').query().orderBy('created_at', 'desc')
-    return inertia.render('todos/index/index', { todos })
+
+    // 1. On récupère le numéro de page depuis la query string (?page=1)
+    const page = request.input('page', 1)
+
+    // 2. On utilise .paginate(page, limite)
+    const todos = await user
+      .related('todos')
+      .query()
+      .orderBy('created_at', 'desc')
+      .paginate(page, 10)
+
+    // 3. On passe l'objet à Inertia
+    // Note : .toJSON() est nécessaire ici pour transformer l'instance du Paginator
+    // en un objet simple utilisable par ton composant Frontend.
+    return inertia.render('todos/index/index', {
+      todos: todos.toJSON(),
+    })
   }
 
   async create({ inertia }: HttpContext) {

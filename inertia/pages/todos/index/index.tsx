@@ -37,15 +37,13 @@ interface Props {
 
 export default function Index({ todos }: Props) {
   const [loading, setLoading] = useState(false)
-
-  // État local pour piloter l'affichage de la pagination d'Antd
   const [currentPage, setCurrentPage] = useState(todos.meta.current_page)
 
-  // On synchronise l'état local dès que le serveur renvoie de nouvelles données (props)
+  // Synchronisation avec le serveur
   useEffect(() => {
     setCurrentPage(todos.meta.current_page)
     setLoading(false)
-  }, [todos.meta.current_page])
+  }, [todos])
 
   const handleDelete = (id: string) => {
     router.delete(`/web/todos/${id}`, {
@@ -58,7 +56,8 @@ export default function Index({ todos }: Props) {
       `/web/todos/${todo.id}`,
       { isCompleted: !todo.isCompleted },
       {
-        preserveState: true,
+        preserveState: false, // Important pour voir le changement immédiatement
+        preserveScroll: true,
         onSuccess: () => message.success('Statut mis à jour'),
       }
     )
@@ -66,15 +65,12 @@ export default function Index({ todos }: Props) {
 
   const handleTableChange = (pagination: any) => {
     setLoading(true)
-    // On change visuellement le numéro de page immédiatement
     setCurrentPage(pagination.current)
-
     router.get(
       `/web/todos`,
       { page: pagination.current },
       {
         preserveScroll: true,
-        preserveState: true,
         onFinish: () => setLoading(false),
       }
     )
@@ -130,9 +126,20 @@ export default function Index({ todos }: Props) {
       ),
     },
     {
+      title: 'MIS À JOUR', // <-- LA COLONNE QUE TU AVAIS PERDUE
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      width: 180,
+      render: (date: string) => (
+        <Text type="secondary" italic>
+          {dayjs(date).format('DD MMM YYYY [à] HH:mm')}
+        </Text>
+      ),
+    },
+    {
       title: 'ACTIONS',
       key: 'actions',
-      width: 100,
+      width: 80,
       align: 'center' as const,
       render: (_: unknown, record: Todo) => (
         <Popconfirm

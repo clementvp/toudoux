@@ -1,18 +1,23 @@
 import { Head, useForm } from '@inertiajs/react'
-import { Button, Checkbox, Form, Input, Card, Typography } from 'antd'
+import { Button, Checkbox, Form, Input, Card, Typography, Alert } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 
 const { Title, Text } = Typography
 
 export default function Login() {
-  const { data, setData, post, processing, errors } = useForm({
+  const { data, setData, post, processing, errors, clearErrors } = useForm({
     email: '',
     password: '',
     remember: false,
+    auth: '',
   })
 
   const onFinish = () => {
     post('/web/login')
+  }
+
+  function onCloseAlert() {
+    clearErrors('auth')
   }
 
   return (
@@ -41,7 +46,17 @@ export default function Login() {
             onFinish={onFinish}
             size="large"
           >
-            <Form.Item validateStatus={errors.email ? 'error' : ''} help={errors.email}>
+            {errors.auth && (
+              <Alert
+                title="Erreur de connexion"
+                description={errors.auth}
+                type="error"
+                showIcon
+                style={{ marginBottom: 24 }}
+                closable={{ 'closeIcon': true, 'onClose': onCloseAlert, 'aria-label': 'close' }}
+              />
+            )}
+            <Form.Item>
               <Input
                 prefix={<UserOutlined />}
                 placeholder="Email"
@@ -49,8 +64,7 @@ export default function Login() {
                 onChange={(e) => setData('email', e.target.value)}
               />
             </Form.Item>
-
-            <Form.Item validateStatus={errors.password ? 'error' : ''} help={errors.password}>
+            <Form.Item>
               <Input.Password
                 prefix={<LockOutlined />}
                 placeholder="Mot de passe"

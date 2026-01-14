@@ -15,14 +15,9 @@ export default class AuthController {
     try {
       const user = await User.verifyCredentials(email, password)
       await auth.use('web').login(user)
-
       return response.redirect().toRoute('todos.index')
     } catch (error) {
-      // IMPORTANT : Pour Inertia, on flash l'erreur en session
-      // pour qu'elle apparaisse dans le hook useForm()
-      session.flash('errors', {
-        email: 'Identifiants invalides. Veuillez réessayer.',
-      })
+      session.flashErrors({ auth: 'Identifiants invalides' })
       return response.redirect().back()
     }
   }

@@ -6,15 +6,12 @@ export default class AuthController {
     return inertia.render('auth/login')
   }
 
-  /**
-   * LOGIN WEB : Correction pour la gestion des erreurs Inertia
-   */
   async loginWeb({ request, auth, response, session }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
     try {
       const user = await User.verifyCredentials(email, password)
-      await auth.use('web').login(user)
+      await auth.use('web').login(user, !!request.input('remember_me'))
       return response.redirect().toRoute('todos.index')
     } catch (error) {
       session.flashErrors({ auth: 'Identifiants invalides' })
@@ -22,9 +19,6 @@ export default class AuthController {
     }
   }
 
-  /**
-   * LOGIN API : Reste inchangé (parfait pour Bun)
-   */
   async loginApi({ request, response }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 

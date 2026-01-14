@@ -8,7 +8,7 @@ export default function Login() {
   const { data, setData, post, processing, errors, clearErrors } = useForm({
     email: '',
     password: '',
-    remember: false,
+    remember_me: false,
     auth: '',
   })
 
@@ -78,8 +78,8 @@ export default function Login() {
                 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
               >
                 <Checkbox
-                  checked={data.remember}
-                  onChange={(e) => setData('remember', e.target.checked)}
+                  checked={data.remember_me}
+                  onChange={(e) => setData('remember_me', e.target.checked)}
                 >
                   Se souvenir de moi
                 </Checkbox>

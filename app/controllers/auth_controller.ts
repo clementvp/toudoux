@@ -12,27 +12,10 @@ export default class AuthController {
     try {
       const user = await User.verifyCredentials(email, password)
       await auth.use('web').login(user, !!request.input('remember_me'))
-      return response.redirect().toRoute('todos.index')
+      return response.redirect().toRoute('home')
     } catch (error) {
       session.flashErrors({ auth: 'Identifiants invalides' })
       return response.redirect().back()
-    }
-  }
-
-  async loginApi({ request, response }: HttpContext) {
-    const { email, password } = request.only(['email', 'password'])
-
-    try {
-      const user = await User.verifyCredentials(email, password)
-      const token = await User.accessTokens.create(user)
-
-      return response.ok({
-        type: 'bearer',
-        token: token.value!.release(),
-        expires_at: token.expiresAt,
-      })
-    } catch (error) {
-      return response.unauthorized({ error: 'Identifiants invalides' })
     }
   }
 

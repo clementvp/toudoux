@@ -1,6 +1,5 @@
 import { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
-import Todo from '#models/todo'
 
 export default class HomeController {
   async showHome({ auth, inertia, request }: HttpContext) {
@@ -17,8 +16,9 @@ export default class HomeController {
     const startRange = targetDate.minus({ months: 1 }).startOf('month')
     const endRange = targetDate.plus({ months: 1 }).endOf('month')
 
-    const todos = await Todo.query()
-      .where('userId', user.id)
+    const todos = await user
+      .related('todos')
+      .query()
       .where('dueAt', '>=', startRange.toSQLDate()!)
       .where('dueAt', '<=', endRange.toSQLDate()!)
       .orderBy('dueAt', 'asc')

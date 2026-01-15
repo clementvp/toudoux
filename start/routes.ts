@@ -9,12 +9,17 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+const TodosController = () => import('#controllers/todos_controller')
 const HomeController = () => import('#controllers/web/home_controller')
 const AuthController = () => import('#controllers/auth_controller')
 
 router
   .get('/', [HomeController, 'showHome'])
   .as('home')
+  .use(middleware.auth({ guards: ['web'] }))
+
+router
+  .patch('/todos/:id', [TodosController, 'updateTodo'])
   .use(middleware.auth({ guards: ['web'] }))
 
 router

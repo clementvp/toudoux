@@ -1,6 +1,5 @@
 import { Card, Typography, Button, theme } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
-import { router } from '@inertiajs/react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Todo } from '~/pages/home'
 
@@ -15,7 +14,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
 
   return (
     <Card
-      variant="borderless" // Antd v5.14+ utilise variant="none" ou "borderless"
+      variant="borderless"
       styles={{
         header: {
           borderBottom: 'none',
@@ -37,7 +36,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
         boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
         borderRadius: '16px',
         overflow: 'hidden',
-        border: 'none', // On gère la bordure ici si variant ne suffit pas
+        border: 'none',
       }}
       title={
         <div style={{ textAlign: 'center' }}>
@@ -47,9 +46,6 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
           >
             {selectedDate.format('dddd D MMMM')}
           </Typography.Title>
-          <Typography.Text type="secondary" style={{ fontSize: '12px' }}>
-            {tasks.length} tâches
-          </Typography.Text>
         </div>
       }
     >
@@ -57,7 +53,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
         {tasks.map((todo) => (
           <div
             key={todo.id}
-            onClick={() => router.patch(`/todos/${todo.id}/toggle`)}
+            onClick={() => {}}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -121,16 +117,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
                 </span>
               )}
             </div>
-            <Button
-              type="text"
-              danger
-              size="small"
-              icon={<DeleteOutlined />}
-              onClick={(e) => {
-                e.stopPropagation()
-                if (confirm('Supprimer ?')) router.delete(`/todos/${todo.id}`)
-              }}
-            />
+            <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={() => {}} />
           </div>
         ))}
       </div>

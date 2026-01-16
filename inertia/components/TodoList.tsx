@@ -17,6 +17,10 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
     router.patch(`/todos/${id}`)
   }
 
+  const handleDelete = (id: string) => {
+    router.delete(`/todos/${id}`)
+  }
+
   return (
     <Card
       variant="borderless"
@@ -122,7 +126,15 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
                 </span>
               )}
             </div>
-            <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={() => {}} />
+            <Button
+              type="text"
+              danger
+              size="small"
+              icon={<DeleteOutlined />}
+              onClick={() => {
+                handleDelete(todo.id)
+              }}
+            />
           </div>
         ))}
       </div>

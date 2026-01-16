@@ -19,7 +19,11 @@ router
   .use(middleware.auth({ guards: ['web'] }))
 
 router
-  .patch('/todos/:id', [TodosController, 'updateTodo'])
+  .group(() => {
+    router.patch('/todos/:id', [TodosController, 'updateTodo'])
+    router.delete('/todos/:id', [TodosController, 'deleteTodo'])
+    router.post('/todos', [TodosController, 'createTodo'])
+  })
   .use(middleware.auth({ guards: ['web'] }))
 
 router

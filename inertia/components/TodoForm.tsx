@@ -8,7 +8,7 @@ interface TodoFormProps {
 }
 
 export const TodoForm = ({ selectedDate }: TodoFormProps) => {
-  const { data, setData, post, processing, errors, reset } = useForm<any>({
+  const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     description: '',
     dueAt: selectedDate.format('YYYY-MM-DD'),
@@ -53,7 +53,7 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
             <TimePicker
               value={data.hour ? dayjs(data.hour, 'HH:mm') : null}
               onChange={(time) => {
-                const formattedTime = time ? time.format('HH:mm') : null
+                const formattedTime = time ? time.format('HH:mm') : ''
                 setData('hour', formattedTime)
               }}
               format="HH:mm"
@@ -70,7 +70,7 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
             value={data.description}
             onChange={(e) => setData('description', e.target.value)}
             rows={5}
-            placeholder="Détails (optionnel)..."
+            placeholder="Description (optionnel)..."
           />
         </Form.Item>
 

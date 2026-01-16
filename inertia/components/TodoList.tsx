@@ -2,6 +2,7 @@ import { Card, Typography, Button, theme } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
 import { Todo } from '~/pages/home'
+import { router } from '@inertiajs/react'
 
 interface TodoListProps {
   selectedDate: Dayjs
@@ -11,6 +12,10 @@ interface TodoListProps {
 
 export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
   const tasks = todos.filter((t) => dayjs(t.dueAt).isSame(selectedDate, 'day'))
+
+  const handleToggle = (id: string) => {
+    router.patch(`/todos/${id}`)
+  }
 
   return (
     <Card
@@ -53,7 +58,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
         {tasks.map((todo) => (
           <div
             key={todo.id}
-            onClick={() => {}}
+            onClick={() => handleToggle(todo.id)}
             style={{
               display: 'flex',
               alignItems: 'center',

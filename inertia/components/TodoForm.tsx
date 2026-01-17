@@ -51,6 +51,8 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
 
           <Form.Item style={{ flex: 1, marginBottom: '12px' }}>
             <TimePicker
+              needConfirm={false}
+              showNow={false}
               value={data.hour ? dayjs(data.hour, 'HH:mm') : null}
               onChange={(time) => {
                 const formattedTime = time ? time.format('HH:mm') : ''

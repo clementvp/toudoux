@@ -1,5 +1,3 @@
-// import type { HttpContext } from '@adonisjs/core/http'
-
 import { HttpContext } from '@adonisjs/core/http'
 
 export default class TodosController {
@@ -16,9 +14,7 @@ export default class TodosController {
 
   async deleteTodo({ auth, response, params }: HttpContext) {
     const user = auth.getUserOrFail()
-
     const todo = await user.related('todos').query().where('id', params.id).first()
-
     if (!todo) {
       return response.redirect().back()
     }

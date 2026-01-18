@@ -2,6 +2,7 @@ import { Card, Form, Input, TimePicker, Button } from 'antd'
 import { useForm } from '@inertiajs/react'
 import dayjs, { Dayjs } from 'dayjs'
 import { useEffect } from 'react'
+import styles from './TodoForm.module.css' // Import du fichier CSS
 
 interface TodoFormProps {
   selectedDate: Dayjs
@@ -20,26 +21,23 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
   }, [selectedDate])
 
   const onFinish = () => {
-    post('/todos')
-    reset()
+    post('/todos', {
+      onSuccess: () => reset(),
+    })
   }
 
   return (
     <Card
-      title={
-        <div style={{ textAlign: 'center', lineHeight: '1.2', textTransform: 'capitalize' }}>
-          {selectedDate.format('dddd D MMMM')}
-        </div>
-      }
-      style={{ borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}
+      className={styles.card}
+      title={<div className={styles.cardTitle}>{selectedDate.format('dddd D MMMM')}</div>}
     >
       <Form layout="vertical" onFinish={onFinish}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+        <div className={styles.rowContainer}>
           <Form.Item
             validateStatus={errors.title ? 'error' : ''}
             help={errors.title}
             required
-            style={{ flex: '0 0 75%', marginBottom: '12px' }}
+            className={styles.titleItem}
           >
             <Input
               value={data.title}
@@ -49,7 +47,7 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
             />
           </Form.Item>
 
-          <Form.Item style={{ flex: 1, marginBottom: '12px' }}>
+          <Form.Item className={styles.timePickerItem}>
             <TimePicker
               needConfirm={false}
               showNow={false}
@@ -60,14 +58,14 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
               }}
               format="HH:mm"
               placeholder="--:--"
-              style={{ width: '100%' }}
+              className={styles.timePicker}
               size="large"
               suffixIcon={null}
             />
           </Form.Item>
         </div>
 
-        <Form.Item style={{ marginBottom: '16px' }} help={errors.description}>
+        <Form.Item className={styles.descriptionItem} help={errors.description}>
           <Input.TextArea
             value={data.description}
             onChange={(e) => setData('description', e.target.value)}
@@ -81,8 +79,8 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
           block
           htmlType="submit"
           size="large"
-          loading={processing} // Ajout du feedback visuel
-          style={{ fontWeight: 600 }}
+          loading={processing}
+          className={styles.submitButton}
         >
           Enregistrer
         </Button>

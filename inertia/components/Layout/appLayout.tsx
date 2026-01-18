@@ -1,7 +1,7 @@
 import { Layout, Typography, Space, Button } from 'antd'
 import { UnorderedListOutlined, LogoutOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
-import styles from './AppLayout.module.css'
+import styles from './appLayout.module.css'
 import React from 'react'
 
 const { Title } = Typography

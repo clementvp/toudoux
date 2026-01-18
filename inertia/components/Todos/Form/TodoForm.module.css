@@ -1,0 +1,38 @@
+.card {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.cardTitle {
+    text-align: center;
+    line-height: 1.2;
+    text-transform: capitalize;
+}
+
+.rowContainer {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.titleItem {
+    flex: 0 0 75%;
+    margin-bottom: 12px;
+}
+
+.timePickerItem {
+    flex: 1;
+    margin-bottom: 12px;
+}
+
+.timePicker {
+    width: 100%;
+}
+
+.descriptionItem {
+    margin-bottom: 16px;
+}
+
+.submitButton {
+    font-weight: 600;
+}

@@ -3,6 +3,7 @@ import { DeleteOutlined } from '@ant-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
 import { Todo } from '~/pages/home'
 import { router } from '@inertiajs/react'
+import styles from './TodoList.module.css'
 
 interface TodoListProps {
   selectedDate: Dayjs
@@ -24,100 +25,61 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
   return (
     <Card
       variant="borderless"
+      className={styles.card}
       styles={{
-        header: {
-          borderBottom: 'none',
-          paddingTop: '20px',
-        },
+        header: { borderBottom: 'none', paddingTop: '20px' },
         body: {
-          flex: 1,
-          overflowY: 'auto',
           padding: '20px',
           backgroundColor: '#f8f9fa',
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
         },
       }}
-      style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-        borderRadius: '16px',
-        overflow: 'hidden',
-        border: 'none',
-      }}
       title={
-        <div style={{ textAlign: 'center' }}>
-          <Typography.Title
-            level={5}
-            style={{ margin: 0, textTransform: 'capitalize', fontWeight: 700 }}
-          >
+        <div className={styles.titleContainer}>
+          <Typography.Title level={5} className={styles.titleText}>
             {selectedDate.format('dddd D MMMM')}
           </Typography.Title>
         </div>
       }
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div className={styles.listContainer}>
         {tasks.map((todo) => (
           <div
             key={todo.id}
+            className={styles.todoItem}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '12px 16px',
               background: token.colorBgContainer,
-              borderRadius: '12px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               border: `1px solid ${todo.isCompleted ? 'transparent' : token.colorBorderSecondary}`,
               opacity: todo.isCompleted ? 0.7 : 1,
             }}
           >
             <div
               onClick={() => handleToggle(todo.id)}
+              className={styles.checkbox}
               style={{
-                width: '30px',
-                height: '30px',
-                borderRadius: '50%',
-                flexShrink: 0,
-                marginRight: '12px',
                 border: `2px solid ${todo.isCompleted ? token.colorSuccess : token.colorBorder}`,
                 background: todo.isCompleted ? token.colorSuccess : 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
               }}
             >
-              {todo.isCompleted && <span style={{ color: 'white', fontSize: '10px' }}>✓</span>}
+              {todo.isCompleted && <span className={styles.checkboxIcon}>✓</span>}
             </div>
-            <div
-              style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                overflow: 'hidden',
-              }}
-            >
+
+            <div className={styles.contentWrapper}>
               <Typography.Text
                 delete={todo.isCompleted}
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  color: todo.isCompleted ? token.colorTextDisabled : token.colorText,
-                }}
+                className={styles.todoText}
+                style={{ color: todo.isCompleted ? token.colorTextDisabled : token.colorText }}
               >
                 {todo.title}
               </Typography.Text>
 
               {todo.hour && (
                 <span
+                  className={styles.hourBadge}
                   style={{
-                    fontSize: '10px',
-                    padding: '1px 5px',
                     background: token.colorFillAlter,
-                    borderRadius: '4px',
                     color: token.colorTextSecondary,
                   }}
                 >
@@ -125,14 +87,13 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
                 </span>
               )}
             </div>
+
             <Button
               type="text"
               danger
               size="small"
               icon={<DeleteOutlined />}
-              onClick={() => {
-                handleDelete(todo.id)
-              }}
+              onClick={() => handleDelete(todo.id)}
             />
           </div>
         ))}

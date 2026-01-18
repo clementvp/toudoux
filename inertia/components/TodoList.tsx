@@ -62,7 +62,6 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
         {tasks.map((todo) => (
           <div
             key={todo.id}
-            onClick={() => handleToggle(todo.id)}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -72,14 +71,13 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
               boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               border: `1px solid ${todo.isCompleted ? 'transparent' : token.colorBorderSecondary}`,
               opacity: todo.isCompleted ? 0.7 : 1,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
             }}
           >
             <div
+              onClick={() => handleToggle(todo.id)}
               style={{
-                width: '18px',
-                height: '18px',
+                width: '30px',
+                height: '30px',
                 borderRadius: '50%',
                 flexShrink: 0,
                 marginRight: '12px',
@@ -88,6 +86,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                cursor: 'pointer',
               }}
             >
               {todo.isCompleted && <span style={{ color: 'white', fontSize: '10px' }}>✓</span>}

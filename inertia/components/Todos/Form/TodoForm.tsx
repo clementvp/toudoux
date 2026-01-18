@@ -70,7 +70,7 @@ export const TodoForm = ({ selectedDate }: TodoFormProps) => {
             value={data.description}
             onChange={(e) => setData('description', e.target.value)}
             rows={5}
-            placeholder="Description (optionnel)..."
+            placeholder="Description (optionnel)"
           />
         </Form.Item>
 

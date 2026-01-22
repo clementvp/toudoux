@@ -1,4 +1,4 @@
-import { Card, Typography, Button, theme } from 'antd'
+import { Card, Typography, Button, theme, Select, Flex } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import dayjs, { Dayjs } from 'dayjs'
 import { Todo } from '~/pages/home'
@@ -27,7 +27,7 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
       variant="borderless"
       className={styles.card}
       styles={{
-        header: { borderBottom: 'none', paddingTop: '20px' },
+        header: { borderBottom: 'none', paddingTop: '20px', paddingBottom: '10px' },
         body: {
           padding: '20px',
           backgroundColor: '#f8f9fa',
@@ -37,11 +37,21 @@ export const TodoList = ({ selectedDate, todos, token }: TodoListProps) => {
         },
       }}
       title={
-        <div className={styles.titleContainer}>
-          <Typography.Title level={5} className={styles.titleText}>
+        <Flex justify="space-evenly" align="center" vertical>
+          <Typography.Title level={5} className={styles.titleText} style={{ marginBottom: 0 }}>
             {selectedDate.format('dddd D MMMM')}
           </Typography.Title>
-        </div>
+          <Select
+            style={{ width: '100%' }}
+            defaultValue=""
+            options={[
+              { value: '', label: 'Toutes priorités' },
+              { value: '1', label: 'Haute' },
+              { value: '2', label: 'Moyenne' },
+              { value: '3', label: 'Basse' },
+            ]}
+          />
+        </Flex>
       }
     >
       <div className={styles.listContainer}>

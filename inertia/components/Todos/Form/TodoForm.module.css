@@ -9,11 +9,6 @@
     text-transform: capitalize;
 }
 
-.rowContainer {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-}
 
 .titleItem {
     flex: 0 0 75%;

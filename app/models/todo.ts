@@ -27,6 +27,9 @@ export default class Todo extends BaseModel {
   @column()
   declare hour: string | null
 
+  @column()
+  declare priority: '1' | '2' | '3' | null
+
   @beforeCreate()
   public static assignUuid(todo: Todo) {
     todo.id = randomUUID()

@@ -22,6 +22,7 @@ export default class extends BaseSchema {
       table.boolean('is_completed').notNullable().defaultTo(false)
       table.timestamp('due_at').nullable()
       table.string('hour', 5).nullable()
+      table.string('priority').nullable()
 
       // 4. Timestamps (avec fuseau horaire pour Postgres)
       table.timestamp('created_at', { useTz: true }).notNullable()
